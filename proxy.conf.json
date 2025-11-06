@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "https://cetech.roque.tecnm.mx",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
