@@ -1,1 +1,33 @@
-<p>kardex works!</p>
+<div class="container mt-4">
+  @if (loading) {
+    <p>Cargando kardex...</p>
+  } @else if (errorMsg) {
+    <div class="alert alert-danger text-center">{{ errorMsg }}</div>
+  } @else {
+    <div class="card shadow p-4">
+      <h3 class="text-center mb-4">Kardex del estudiante</h3>
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-primary">
+          <tr>
+            <th>Clave</th>
+            <th>Materia</th>
+            <th>Créditos</th>
+            <th>Calificación final</th>
+            <th>Periodo</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (m of materias; track m.id_materia) {
+            <tr>
+              <td>{{ m.clave_materia }}</td>
+              <td>{{ m.nombre_materia }}</td>
+              <td>{{ m.creditos }}</td>
+              <td>{{ m.calificacion }}</td>
+              <td>{{ m.periodo }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
