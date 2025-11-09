@@ -1,1 +1,33 @@
-<p>horarios works!</p>
+<div class="container mt-4">
+  @if (loading) {
+    <p>Cargando horarios...</p>
+  } @else if (errorMsg) {
+    <div class="alert alert-danger text-center">{{ errorMsg }}</div>
+  } @else {
+    <div class="card shadow p-4">
+      <h3 class="text-center mb-3">Horario del semestre actual</h3>
+      <table class="table table-bordered table-striped align-middle">
+        <thead class="table-primary">
+          <tr>
+            <th>Materia</th>
+            <th>Docente</th>
+            <th>Día</th>
+            <th>Hora inicio</th>
+            <th>Hora fin</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (h of horarios; track h.id_grupo) {
+            <tr>
+              <td>{{ h.materia }}</td>
+              <td>{{ h.docente }}</td>
+              <td>{{ h.dia }}</td>
+              <td>{{ h.hora_inicio }}</td>
+              <td>{{ h.hora_fin }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
