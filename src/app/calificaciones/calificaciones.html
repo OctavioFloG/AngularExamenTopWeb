@@ -1,1 +1,46 @@
-<p>calificaciones works!</p>
+<div class="container mt-4">
+    <div class="card shadow p-4">
+        <h3 class="text-center mb-4">
+            Calificaciones del periodo {{ periodo.descripcion_periodo }}
+        </h3>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th>Clave</th>
+                        <th>Materia</th>
+                        <th>Grupo</th>
+                        <th>1er Parcial</th>
+                        <th>2do Parcial</th>
+                        <th>3er Parcial</th>
+                        <th>4to Parcial</th>
+                        <th>Promedio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (m of materias; track m.materia.id_grupo) {
+                    <tr>
+                        <td>{{ m.materia.clave_materia }}</td>
+                        <td>{{ m.materia.nombre_materia }}</td>
+                        <td class="text-center">{{ m.materia.letra_grupo }}</td>
+                        @for (c of m.calificaiones; track c.id_calificacion) {
+                        <td class="text-center">
+                            {{ c.calificacion ?? '-' }}
+                        </td>
+                        }
+                        @if (m.calificaiones.length < 4) { <td colspan={{ 4 - m.calificaiones.length }}>
+                            </td>
+                            }
+                            <td class="text-center fw-bold">
+                                {{
+                                calcularPromedio(m.calificaiones)
+                                }}
+                            </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,42 +1,62 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Auth } from '../services/auth/auth';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
-export class LoginComponent {
-  email: string = '';
-  password: string = '';
-  errorMessage: string = '';
+export class LoginComponent implements OnInit {
+  email = '';
+  password = '';
+  errorMessage = '';
+  loading = false;
 
-  constructor(private authService: Auth, private router: Router) { }
+  constructor(private authService: Auth, private router: Router) {}
+
+  ngOnInit(): void {
+    // Si ya hay un token guardado, redirige directamente al dashboard
+    const token = this.authService.getToken() || localStorage.getItem('authToken');
+    if (token) {
+      console.log('[Login] Token detectado, redirigiendo al dashboard...');
+      this.router.navigateByUrl('/dashboard');
+    }
+  }
 
   onLogin(): void {
-    if (this.email && this.password) {
-      this.authService.login(this.email, this.password).subscribe(
-        {
-          next: (response) => {
-            this.authService.setToken(response.message.login.token);
-            if (response.message.login.token) {
-              console.log('Inicio de sesión exitoso. Token almacenado.');
-              console.log('Token:', response.message.login.token);
-              this.router.navigateByUrl('/dashboard');
-            } else {
-              this.errorMessage = 'Inicio de sesión fallido. Por favor verifica tus credenciales.';
-            }
-          },
-          error: (error) => {
-            this.errorMessage = 'Error de autenticación. Por favor verifica tus credenciales.';
-          }
-        }
-      );
-    } else {
+    if (!this.email || !this.password) {
       this.errorMessage = 'Por favor ingresa tu correo y contraseña.';
+      return;
     }
+
+    this.loading = true;
+    this.errorMessage = '';
+
+    this.authService.login(this.email, this.password).subscribe({
+      next: (response) => {
+        const token = response?.message?.login?.token;
+
+        if (token) {
+          console.log('[Login] Inicio de sesión exitoso. Token:', token);
+          this.authService.setToken(token);
+          this.router.navigateByUrl('/dashboard');
+        } else {
+          console.warn('[Login] No se recibió token válido en la respuesta:', response);
+          this.errorMessage = 'Inicio de sesión fallido. Verifica tus credenciales.';
+        }
+
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('[Login] Error en autenticación:', error);
+        this.errorMessage = 'Error de autenticación. Verifica tus credenciales.';
+        this.loading = false;
+      }
+    });
   }
 }
