@@ -1,11 +1,11 @@
-export interface StudentResponse {
+export interface EstudianteResponse {
   code: number;
   message: string;
   flag: boolean;
-  data: StudentData;
+  data: EstudianteData;
 }
 
-export interface StudentData {
+export interface EstudianteData {
   numero_control: string;
   persona: string;
   email: string;

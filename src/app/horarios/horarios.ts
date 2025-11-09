@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './horarios.html',
   styleUrl: './horarios.css',
 })
-export class Horarios {
+export class HorariosComponent {
 
 }

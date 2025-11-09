@@ -22,7 +22,13 @@ export class LoginComponent {
         {
           next: (response) => {
             this.authService.setToken(response.message.login.token);
-            this.router.navigate(['/dashboard']);
+            if (response.message.login.token) {
+              console.log('Inicio de sesión exitoso. Token almacenado.');
+              console.log('Token:', response.message.login.token);
+            this.router.navigateByUrl('/dashboard');
+            } else {
+              this.errorMessage = 'Inicio de sesión fallido. Por favor verifica tus credenciales.';
+            }
           },
           error: (error) => {
             this.errorMessage = 'Error de autenticación. Por favor verifica tus credenciales.';

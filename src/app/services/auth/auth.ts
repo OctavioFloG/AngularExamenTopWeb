@@ -1,26 +1,21 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { ApiService } from '../api/api.service';
+import { Observable, catchError, throwError } from 'rxjs';
 import { LoginResponse } from '../../../interfaces/login-response';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Auth {
-  //Cargamos desde .env o environment.ts
-  private apiUrl = environment.apiUrl;
+export class Auth extends ApiService {
 
-  constructor(private http: HttpClient) { }
-
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<LoginResponse> {
     const body = { email, password };
 
-    return this.http.post<LoginResponse>(`/api/login`, body)
+    return this.post<LoginResponse>('login', body)
       .pipe(
         catchError((error) => {
-          console.error('Login error:', error);
-          throw error;
+          console.error('Error en login:', error);
+          return throwError(() => error);
         })
       );
   }

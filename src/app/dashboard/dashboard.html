@@ -1,1 +1,64 @@
-<p>dashboard works!</p>
+<div class="container mt-4">
+  @if (loading) {
+    <div class="text-center mt-5">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="mt-2">Cargando datos del estudiante...</p>
+    </div>
+  }
+  @else if (errorMsg) {
+    <div class="alert alert-danger text-center">
+      {{ errorMsg }}
+    </div>
+  }
+  @else if (estudiante) {
+    <div class="card shadow p-4">
+      <h2 class="text-center mb-3">Bienvenido, {{ estudiante.persona }}</h2>
+
+      <div class="row">
+        <div class="col-md-6">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Número de control:</strong> {{ estudiante.numero_control }}
+            </li>
+            <li class="list-group-item">
+              <strong>Email:</strong> {{ estudiante.email }}
+            </li>
+            <li class="list-group-item">
+              <strong>Semestre:</strong> {{ estudiante.semestre }}
+            </li>
+            <li class="list-group-item">
+              <strong>Materias cursadas:</strong> {{ estudiante.materias_cursadas }}
+            </li>
+            <li class="list-group-item">
+              <strong>Materias aprobadas:</strong> {{ estudiante.materias_aprobadas }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-6">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>Créditos acumulados:</strong> {{ estudiante.creditos_acumulados }}
+            </li>
+            <li class="list-group-item">
+              <strong>Promedio ponderado:</strong>
+              {{ estudiante.promedio_ponderado | number:'1.2-2' }}
+            </li>
+            <li class="list-group-item">
+              <strong>Porcentaje de avance:</strong> {{ estudiante.porcentaje_avance }}%
+            </li>
+            <li class="list-group-item">
+              <strong>Materias reprobadas:</strong> {{ estudiante.materias_reprobadas }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      @if (estudiante.foto) {
+        <div class="text-center mt-4">
+          <img [src]="estudiante.foto" class="rounded-circle shadow" width="150" height="150">
+        </div>
+      }
+    </div>
+  }
+</div>

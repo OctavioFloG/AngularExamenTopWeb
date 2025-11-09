@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './kardex.html',
   styleUrl: './kardex.css',
 })
-export class Kardex {
+export class KardexComponent {
 
 }
