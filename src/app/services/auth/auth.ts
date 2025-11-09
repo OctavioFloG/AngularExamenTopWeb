@@ -1,8 +1,8 @@
-// src/app/services/auth/auth.ts
 import { Injectable, signal, computed } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
+import { SafeStorage } from '../../utils/storage';
 import { LoginResponse } from '../../../interfaces/login-response';
-import { ApiService } from '../api/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,21 +10,19 @@ import { ApiService } from '../api/api.service';
 export class Auth {
   private _token = signal<string | null>(null);
 
-  constructor(private api: ApiService) {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('authToken');
-      if (stored) {
-        this._token.set(stored);
-        console.log('[Auth] Token restaurado desde localStorage');
-      }
+  constructor(private http: HttpClient) {
+    const stored = SafeStorage.getItem('authToken');
+    if (stored) {
+      this._token.set(stored);
+      console.log('[Auth] Token restaurado desde SafeStorage');
     }
   }
 
   login(email: string, password: string) {
     const body = { email, password };
-    return this.api.post<LoginResponse>('login', body).pipe(
+    return this.http.post<LoginResponse>('/api/login', body).pipe(
       catchError((error) => {
-        console.error('[Auth] Error al iniciar sesión:', error);
+        console.error('Login error:', error);
         return throwError(() => error);
       })
     );
@@ -32,24 +30,16 @@ export class Auth {
 
   setToken(token: string): void {
     this._token.set(token);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('authToken', token);
-    }
+    SafeStorage.setItem('authToken', token);
   }
 
   getToken(): string | null {
-    if (this._token()) return this._token();
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('authToken');
-    }
-    return null;
+    return this._token() ?? SafeStorage.getItem('authToken');
   }
 
   logout(): void {
     this._token.set(null);
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('authToken');
-    }
+    SafeStorage.removeItem('authToken');
   }
 
   readonly isAuthenticated = computed(() => !!this._token());

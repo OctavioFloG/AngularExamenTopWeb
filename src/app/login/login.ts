@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Auth } from '../services/auth/auth';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { SafeStorage } from '../utils/storage';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(private authService: Auth, private router: Router) {}
 
   ngOnInit(): void {
-    // Si ya hay un token guardado, redirige directamente al dashboard
-    const token = this.authService.getToken() || localStorage.getItem('authToken');
+    const token = this.authService.getToken() || SafeStorage.getItem('authToken');
+
     if (token) {
       console.log('[Login] Token detectado, redirigiendo al dashboard...');
       this.router.navigateByUrl('/dashboard');
