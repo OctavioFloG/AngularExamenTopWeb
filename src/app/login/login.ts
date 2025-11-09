@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth } from '../auth';
+import { Auth } from '../services/auth/auth';
 import { FormsModule } from '@angular/forms';
 
 @Component({
