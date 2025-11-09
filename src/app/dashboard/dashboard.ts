@@ -20,12 +20,23 @@ export class DashboardComponent implements OnInit {
       next: (data) => {
         console.log('Respuesta API:', data);
         if (data.code === 200 && data.data) {
-          this.estudiante = data.data;
+          console.log('Datos válidos');
+          const estudiante = data.data;
+
+          // Limpiar la cadena de la foto de perfil
+          if (estudiante.foto) {
+            estudiante.foto = estudiante.foto.replace(/\r?\n|\r/g, '').trim();
+          }
+
+          // Cargar los datos del estudiante
+          this.estudiante = estudiante;
         } else {
+          console.warn('Datos no válidos');
           this.errorMsg = 'No se encontraron datos del estudiante.';
         }
         this.loading = false;
       },
+
       error: (error) => {
         console.error('Error al obtener los datos del estudiante:', error);
         this.errorMsg = 'Error al cargar los datos del estudiante.';
