@@ -1,39 +1,57 @@
-import { Injectable } from '@angular/core';
-import { ApiService } from '../api/api.service';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Injectable, signal, computed } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
 import { LoginResponse } from '../../../interfaces/login-response';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class Auth extends ApiService {
+export class Auth {
+  // 👇 variable en memoria (reactiva con signal)
+  private _token = signal<string | null>(null);
 
-  login(email: string, password: string): Observable<LoginResponse> {
-    const body = { email, password };
-
-    return this.post<LoginResponse>('login', body)
-      .pipe(
-        catchError((error) => {
-          console.error('Error en login:', error);
-          return throwError(() => error);
-        })
-      );
+  constructor(private http: HttpClient) {
+    // 👇 solo ejecuta esto en el navegador, no en SSR
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('authToken');
+      if (stored) this._token.set(stored);
+    }
   }
 
-  setToken(token: string) {
-    localStorage.setItem('authToken', token); // Guarda el token en localStorage del navegador
+  login(email: string, password: string) {
+    const body = { email, password };
+    return this.http.post<LoginResponse>('/api/login', body).pipe(
+      catchError((error) => {
+        console.error('Login error:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  setToken(token: string): void {
+    this._token.set(token);
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('authToken', token);
+    }
   }
 
   getToken(): string | null {
-    return localStorage.getItem('authToken');  // Obtiene el token desde localStorage
+    if (this._token()) return this._token();
+
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('authToken');
+    }
+    return null;
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');  // Elimina el token al cerrar sesión
+    this._token.set(null);
+
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('authToken');
+    }
   }
 
-  isAuthenticated(): boolean {
-    return !!this.getToken();  // Si hay un token, el usuario está autenticado
-  }
-
+  readonly isAuthenticated = computed(() => !!this._token());
 }
