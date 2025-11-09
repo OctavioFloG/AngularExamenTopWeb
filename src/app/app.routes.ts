@@ -6,10 +6,14 @@ import { AuthGuard } from './services/auth-guard/auth-guard';
 import { KardexComponent } from './kardex/kardex';
 import { HorariosComponent } from './horarios/horarios';
 import { CalificacionesComponent } from './calificaciones/calificaciones';
+import { Auth } from './services/auth/auth';
+
+const token = localStorage.getItem('authToken');
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  // Para redirigir al login o al dashboard según el estado de autenticación
+  { path: '', redirectTo: token ? '/dashboard' : '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
   {
     path: '', canActivate: [AuthGuard], children: [
       { path: 'dashboard', component: DashboardComponent },

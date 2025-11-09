@@ -25,7 +25,7 @@ export class LoginComponent {
             if (response.message.login.token) {
               console.log('Inicio de sesión exitoso. Token almacenado.');
               console.log('Token:', response.message.login.token);
-            this.router.navigateByUrl('/dashboard');
+              this.router.navigateByUrl('/dashboard');
             } else {
               this.errorMessage = 'Inicio de sesión fallido. Por favor verifica tus credenciales.';
             }
@@ -39,11 +39,4 @@ export class LoginComponent {
       this.errorMessage = 'Por favor ingresa tu correo y contraseña.';
     }
   }
-
-  //imprimir token
-  printToken(): void {
-    const token = this.authService.getToken();
-    console.log('Auth Token:', token);
-  }
-
 }

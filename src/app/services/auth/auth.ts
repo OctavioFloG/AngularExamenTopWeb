@@ -1,28 +1,30 @@
+// src/app/services/auth/auth.ts
 import { Injectable, signal, computed } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { LoginResponse } from '../../../interfaces/login-response';
+import { ApiService } from '../api/api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth {
-  // 👇 variable en memoria (reactiva con signal)
   private _token = signal<string | null>(null);
 
-  constructor(private http: HttpClient) {
-    // 👇 solo ejecuta esto en el navegador, no en SSR
+  constructor(private api: ApiService) {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('authToken');
-      if (stored) this._token.set(stored);
+      if (stored) {
+        this._token.set(stored);
+        console.log('[Auth] Token restaurado desde localStorage');
+      }
     }
   }
 
   login(email: string, password: string) {
     const body = { email, password };
-    return this.http.post<LoginResponse>('/api/login', body).pipe(
+    return this.api.post<LoginResponse>('login', body).pipe(
       catchError((error) => {
-        console.error('Login error:', error);
+        console.error('[Auth] Error al iniciar sesión:', error);
         return throwError(() => error);
       })
     );
@@ -30,7 +32,6 @@ export class Auth {
 
   setToken(token: string): void {
     this._token.set(token);
-
     if (typeof window !== 'undefined') {
       localStorage.setItem('authToken', token);
     }
@@ -38,7 +39,6 @@ export class Auth {
 
   getToken(): string | null {
     if (this._token()) return this._token();
-
     if (typeof window !== 'undefined') {
       return localStorage.getItem('authToken');
     }
@@ -47,7 +47,6 @@ export class Auth {
 
   logout(): void {
     this._token.set(null);
-
     if (typeof window !== 'undefined') {
       localStorage.removeItem('authToken');
     }
