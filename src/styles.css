@@ -1,1 +1,342 @@
-/* You can add global styles to this file, and also import other style files */
+/* Estilos globales del portal escolar SII ITC. */
+
+:root {
+  --color-primario: #002b5c; /* Azul institucional TecNM. */
+  --color-secundario: #f39200; /* Naranja de acento. */
+  --color-fondo: #f4f6fb; /* Fondo suave general. */
+  --color-card: #ffffff; /* Fondo de tarjetas. */
+  --color-texto: #1f2933; /* Color principal de texto. */
+  --color-borde-suave: #d0d7e2; /* Bordes suaves para tarjetas y tablas. */
+  --radius-card: 14px; /* Radio estándar de tarjetas. */
+  --sombra-suave: 0 8px 18px rgba(15, 23, 42, 0.12); /* Sombra suave. */
+  --transition-base: all 0.2s ease-in-out; /* Transición estándar. */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+/* ============================= */
+/* LAYOUT GENERAL CON SIDEBAR    */
+/* ============================= */
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, #002b5c, #00152f);
+  color: #ffffff;
+  padding: 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.app-logo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.app-logo-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.app-logo-subtitle {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.app-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+
+.app-menu-item {
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #e5e9f5;
+  text-decoration: none;
+  transition: var(--transition-base);
+}
+
+.app-menu-item span.icon {
+  font-size: 1rem;
+}
+
+.app-menu-item:hover {
+  background-color: rgba(243, 146, 0, 0.16);
+}
+
+.app-menu-item.active,
+.app-menu-item.router-link-active {
+  background-color: var(--color-secundario);
+  color: #111827;
+  font-weight: 600;
+}
+
+.app-content {
+  flex: 1;
+  padding: 1.5rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.app-header-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.app-header-title h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primario);
+}
+
+.app-header-title span {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.app-header-user {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.app-header-user strong {
+  color: var(--color-primario);
+}
+
+.card {
+  background-color: var(--color-card);
+  border-radius: var(--radius-card);
+  box-shadow: var(--sombra-suave);
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--color-borde-suave);
+  transition: var(--transition-base);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primario {
+  background-color: var(--color-secundario);
+  color: #111827;
+  border: none;
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.btn-primario:hover {
+  background-color: #ff9f1c;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.table thead {
+  background-color: #e0e7ff;
+}
+
+.table th,
+.table td {
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.table th {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* ============================= */
+/* LOGIN LAYOUT                  */
+/* ============================= */
+
+.login-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr 1.6fr; 
+  background: radial-gradient(circle at top left, #e0edff 0%, #f4f6fb 40%, #e4efff 100%);
+}
+
+.login-hero {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-hero-title {
+  max-width: 420px;
+}
+
+.login-hero-title h1 {
+  font-size: 2rem;
+  color: var(--color-primario);
+  margin: 0 0 0.4rem;
+}
+
+.login-hero-title p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.92rem;
+}
+
+.login-hero-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.badge {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.72rem;
+  border-radius: 999px;
+  background-color: rgba(0, 43, 92, 0.06);
+  color: #1f2937;
+}
+
+.login-panel {
+  padding: 2.5rem 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;       
+}
+
+.login-card {
+  width: 100%;
+  max-width: 460px;                 
+  background-color: var(--color-card);
+  padding: 2.2rem 2rem;              
+  border-radius: 22px;               
+  box-shadow: var(--sombra-suave);
+  border: 1px solid var(--color-borde-suave);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-left: 6vw;                  
+}
+
+.login-card h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--color-primario);
+}
+
+.login-subtitle {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+}
+
+.login-field label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.login-field input {
+  padding: 0.6rem 0.65rem;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.88rem;
+  outline: none;
+  transition: var(--transition-base);
+}
+
+.login-field input:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 2px rgba(0, 43, 92, 0.12);
+}
+
+.login-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 1.1rem;              
+}
+
+.login-actions .btn-primario {
+  margin-top: 0.4rem;               
+}
+
+.login-error {
+  font-size: 0.78rem;
+  color: #b91c1c;
+}
+
+.login-loading {
+  font-size: 0.78rem;
+  color: #4b5563;
+}
+
+@media (max-width: 900px) {
+  .login-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .login-hero {
+    display: none;
+  }
+
+  .login-card {
+    margin-left: 0;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
