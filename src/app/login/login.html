@@ -1,19 +1,64 @@
-<div class="container mt-5 col-md-4">
-  <div class="card p-4 shadow">
-    <h3 class="text-center mb-3">Iniciar Sesión</h3>
-    <form (ngSubmit)="onLogin()" #form="ngForm">
-      <div class="mb-3">
-        <label>Email</label>
-        <input type="email" [(ngModel)]="email" name="email" class="form-control" required>
+<div class="login-layout">
+  <section class="login-hero">
+    <div class="login-hero-title">
+      <h1>SII - Instituto Tecnológico de Celaya</h1>
+      <p>
+        Usa tu correo institucional y contraseña del SII para ingresar a tu información académica
+        con un entorno seguro y con imagen institucional.
+      </p>
+      <div class="login-hero-badges">
+        <div class="badge">Portal Estudiantil.</div>
+        <div class="badge">Autenticación JWT.</div>
+        <div class="badge">TecNM / IT Celaya.</div>
       </div>
+    </div>
+  </section>
 
-      <div class="mb-3">
-        <label>Contraseña</label>
-        <input type="password" [(ngModel)]="password" name="password" class="form-control" required>
-      </div>
+  <section class="login-panel">
+    <div class="login-card">
+      <h2>Iniciar sesión</h2>
+      <p class="login-subtitle">
+        Usa tu correo institucional y contraseña del SII para ingresar.
+      </p>
 
-      <button class="btn btn-primary w-100" type="submit">Entrar</button>
-      <div> @if(errorMessage){<div>{{errorMessage}}</div>}</div>
-    </form>
-  </div>
+      <form (ngSubmit)="onLogin()" autocomplete="off">
+        <div class="login-field">
+          <label for="correo">Correo institucional</label>
+          <input
+            id="correo"
+            type="email"
+            name="correo"
+            [(ngModel)]="correo"
+            placeholder="tucorreo@itcelaya.edu.mx"
+            required
+          />
+        </div>
+
+        <div class="login-field">
+          <label for="contrasena">Contraseña</label>
+          <input
+            id="contrasena"
+            type="password"
+            name="contrasena"
+            [(ngModel)]="contrasena"
+            required
+          />
+        </div>
+
+        <div class="login-actions">
+          <button class="btn-primario" type="submit" [disabled]="cargando">
+            {{ cargando ? 'Verificando...' : 'Acceder al portal' }}
+          </button>
+
+          <div *ngIf="mensajeError" class="login-error">
+            {{ mensajeError }}
+          </div>
+
+          <div *ngIf="cargando && !mensajeError" class="login-loading">
+            Validando credenciales con el servidor del SII...
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
 </div>
