@@ -1,46 +1,59 @@
-<div class="container mt-4">
-    <div class="card shadow p-4">
-        <h3 class="text-center mb-4">
-            Calificaciones del periodo {{ periodo.descripcion_periodo }}
-        </h3>
+<app-nav></app-nav>
 
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped align-middle">
-                <thead class="table-primary text-center">
-                    <tr>
-                        <th>Clave</th>
-                        <th>Materia</th>
-                        <th>Grupo</th>
-                        <th>1er Parcial</th>
-                        <th>2do Parcial</th>
-                        <th>3er Parcial</th>
-                        <th>4to Parcial</th>
-                        <th>Promedio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (m of materias; track m.materia.id_grupo) {
-                    <tr>
-                        <td>{{ m.materia.clave_materia }}</td>
-                        <td>{{ m.materia.nombre_materia }}</td>
-                        <td class="text-center">{{ m.materia.letra_grupo }}</td>
-                        @for (c of m.calificaiones; track c.id_calificacion) {
-                        <td class="text-center">
-                            {{ c.calificacion ?? '-' }}
-                        </td>
-                        }
-                        @if (m.calificaiones.length < 4) { <td colspan={{ 4 - m.calificaiones.length }}>
-                            </td>
-                            }
-                            <td class="text-center fw-bold">
-                                {{
-                                calcularPromedio(m.calificaiones)
-                                }}
-                            </td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
+<!-- Contenido principal -->
+<div class="container mt-4">
+  @if (loading) {
+    <p class="text-center text-secondary">Cargando calificaciones...</p>
+  } @else if (errorMsg) {
+    <div class="alert alert-danger text-center">{{ errorMsg }}</div>
+  } @else if (calificaciones.length > 0) {
+    <h2 class="text-center mb-3 text-primary fw-bold">
+      Calificaciones del semestre actual
+    </h2>
+
+    @for (item of calificaciones; track item.periodo?.clave_periodo) {
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">
+            {{ item.periodo.descripcion_periodo }} ({{ item.periodo.anio }})
+          </h5>
         </div>
-    </div>
+
+        <div class="card-body p-0">
+          <table class="table table-striped mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Materia</th>
+                <th>Clave</th>
+                <th>Grupo</th>
+                <th>1er Parcial</th>
+                <th>2do Parcial</th>
+                <th>3er Parcial</th>
+                <th>4to Parcial</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (materia of item.materias; track materia.materia.id_grupo) {
+                <tr>
+                  <td>{{ materia.materia.nombre_materia }}</td>
+                  <td>{{ materia.materia.clave_materia }}</td>
+                  <td>{{ materia.materia.letra_grupo }}</td>
+
+                  @for (nota of materia.calificaiones; track nota.id_calificacion) {
+                    <td>{{ nota.calificacion ?? '-' }}</td>
+                  }
+
+                  @if (materia.calificaiones.length < 4) {
+                    <td colspan={{ 4 - materia.calificaiones.length }}>-</td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+  } @else {
+    <p class="text-center text-muted">No hay calificaciones para mostrar.</p>
+  }
 </div>

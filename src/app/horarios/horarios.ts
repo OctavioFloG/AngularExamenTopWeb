@@ -1,38 +1,68 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../services/api/api.service';
+import { Router, RouterModule } from '@angular/router';
+import { EstudianteService } from '../services/estudiante/estudiante';
+import { Auth } from '../services/auth/auth';
+import { NavBarComponent } from '../components/navBar/navBar';
+
 @Component({
   selector: 'app-horarios',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, NavBarComponent],
   templateUrl: './horarios.html',
-  styleUrl: './horarios.css'
+  styleUrls: ['./horarios.css'],
 })
 export class HorariosComponent implements OnInit {
+  horarios: any[] = [];
   loading = true;
   errorMsg = '';
-  horarios: any[] = [];
 
-  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private estudianteService: EstudianteService,
+    private auth: Auth,
+    private router: Router,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.api.get<any>('movil/horarios').subscribe({
-      next: (res) => {
-        console.log('[Horarios] Respuesta API:', res);
-        if (res.code === 200 && res.data?.length > 0) {
-          this.horarios = res.data;
+    this.cargarHorarios();
+  }
+
+  cargarHorarios(): void {
+    this.loading = true;
+    this.cdRef.detectChanges();
+
+    this.estudianteService.getHorarios().subscribe({
+      next: (response) => {
+        console.log('Respuesta de horarios:', response);
+
+        // El backend envía data[0].horario, lo convertimos a un array plano
+        if (response.code === 200 && Array.isArray(response.data)) {
+          const periodo = response.data[0];
+          if (periodo?.horario?.length > 0) {
+            this.horarios = periodo.horario;
+            this.errorMsg = '';
+          } else {
+            this.errorMsg = 'No hay horarios registrados en este periodo.';
+          }
         } else {
-          this.errorMsg = 'No hay horarios disponibles.';
+          this.errorMsg = 'Error: formato inesperado en la respuesta.';
         }
+
         this.loading = false;
-        this.cdr.detectChanges();
+        this.cdRef.detectChanges();
       },
       error: (err) => {
-        console.error('[Horarios] Error:', err);
-        this.errorMsg = 'Error al cargar horarios.';
+        console.error('Error al obtener horarios:', err);
+        this.errorMsg = 'Error al cargar los horarios.';
         this.loading = false;
-        this.cdr.detectChanges();
-      }
+        this.cdRef.detectChanges();
+      },
     });
+  }
+
+  logout(): void {
+    this.auth.logout();
+    this.router.navigateByUrl('/login');
   }
 }

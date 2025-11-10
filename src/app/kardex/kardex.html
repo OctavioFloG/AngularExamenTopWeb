@@ -1,33 +1,57 @@
+<app-nav></app-nav>
+
+<!-- Contenido -->
 <div class="container mt-4">
   @if (loading) {
-    <p>Cargando kardex...</p>
+    <p class="text-center text-secondary">Cargando Kardex...</p>
   } @else if (errorMsg) {
     <div class="alert alert-danger text-center">{{ errorMsg }}</div>
   } @else {
-    <div class="card shadow p-4">
-      <h3 class="text-center mb-4">Kardex del estudiante</h3>
-      <table class="table table-bordered table-striped align-middle">
-        <thead class="table-primary">
-          <tr>
-            <th>Clave</th>
-            <th>Materia</th>
-            <th>Créditos</th>
-            <th>Calificación final</th>
-            <th>Periodo</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (m of materias; track m.id_materia) {
-            <tr>
-              <td>{{ m.clave_materia }}</td>
-              <td>{{ m.nombre_materia }}</td>
-              <td>{{ m.creditos }}</td>
-              <td>{{ m.calificacion }}</td>
-              <td>{{ m.periodo }}</td>
-            </tr>
-          }
-        </tbody>
-      </table>
+    <div class="text-center mb-4">
+      <h2 class="text-primary fw-bold">Kardex del Estudiante</h2>
+      <p class="fw-semibold text-success">
+        Avance académico: {{ avance | number: '1.2-2' }}%
+      </p>
+    </div>
+
+    @for (semestre of (kardexPorSemestre | keyvalue); track semestre.key) {
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Semestre {{ semestre.key }}</h5>
+        </div>
+
+        <div class="card-body p-0">
+          <table class="table table-striped mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Materia</th>
+                <th>Clave</th>
+                <th>Periodo</th>
+                <th>Créditos</th>
+                <th>Calificación</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (materia of semestre.value; track materia.clave_materia) {
+                <tr>
+                  <td>{{ materia.nombre_materia }}</td>
+                  <td>{{ materia.clave_materia }}</td>
+                  <td>{{ materia.periodo }}</td>
+                  <td>{{ materia.creditos }}</td>
+                  <td>{{ materia.calificacion }}</td>
+                  <td>{{ materia.descripcion }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+
+    <div class="alert alert-info text-center fw-semibold">
+      Total de materias: {{ kardex.length }} |
+      Avance académico: {{ avance | number: '1.2-2' }}%
     </div>
   }
 </div>

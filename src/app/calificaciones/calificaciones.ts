@@ -1,56 +1,60 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApiService } from '../services/api/api.service';
+import { Router, RouterModule } from '@angular/router';
+import { EstudianteService } from '../services/estudiante/estudiante';
+import { Auth } from '../services/auth/auth';
+import { NavBarComponent } from '../components/navBar/navBar';
 
 @Component({
   selector: 'app-calificaciones',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule, NavBarComponent],
   templateUrl: './calificaciones.html',
-  styleUrl: './calificaciones.css'
+  styleUrls: ['./calificaciones.css'],
 })
 export class CalificacionesComponent implements OnInit {
+  calificaciones: any[] = [];
   loading = true;
   errorMsg = '';
-  periodo: any = null;
-  materias: any[] = [];
 
-  constructor(private api: ApiService, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private estudianteService: EstudianteService,
+    private auth: Auth,
+    private router: Router,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    console.log('[Calificaciones] Cargando datos...');
-    this.api.get<any>('movil/calificaciones').subscribe({
-      next: (res) => {
-        console.log('[Calificaciones] Respuesta API:', res);
+    this.cargarCalificaciones();
+  }
 
-        if (res.code === 200 && res.data?.length > 0) {
-          const periodoActual = res.data[0];
-          this.periodo = periodoActual.periodo;
-          this.materias = periodoActual.materias;
+  cargarCalificaciones(): void {
+    this.loading = true;
+    this.cdRef.detectChanges();
+
+    this.estudianteService.getCalificaciones().subscribe({
+      next: (response) => {
+        console.log('Respuesta de calificaciones:', response);
+        if (response.code === 200 && response.data?.length > 0) {
+          this.calificaciones = response.data;
+          this.errorMsg = '';
         } else {
-          this.errorMsg = 'No hay calificaciones registradas.';
+          this.errorMsg = 'No se encontraron calificaciones registradas.';
         }
-
         this.loading = false;
-        this.cdr.detectChanges();
+        this.cdRef.detectChanges();
       },
       error: (err) => {
-        console.error('[Calificaciones] Error al obtener datos:', err);
-        this.errorMsg = 'Error al cargar calificaciones.';
+        console.error('Error al obtener calificaciones:', err);
+        this.errorMsg = 'Error al cargar las calificaciones.';
         this.loading = false;
-        this.cdr.detectChanges();
-      }
+        this.cdRef.detectChanges();
+      },
     });
   }
 
-  calcularPromedio(calificaciones: any[]): string {
-    const valores = calificaciones
-      .map(c => parseFloat(c.calificacion))
-      .filter(n => !isNaN(n));
-    if (valores.length === 0) return '-';
-    const promedio = valores.reduce((a, b) => a + b, 0) / valores.length;
-    return promedio.toFixed(1);
+  logout(): void {
+    this.auth.logout();
+    this.router.navigateByUrl('/login');
   }
 }
-
-

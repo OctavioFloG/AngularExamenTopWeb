@@ -22,10 +22,14 @@ export class ApiService {
   }
 
   get<T>(endpoint: string): Observable<T> {
-    return this.http.get<T>(`${this.baseUrl}${endpoint}`, { headers: this.getHeaders() });
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+    return this.http.get<T>(`${this.baseUrl}${cleanEndpoint}`, { headers: this.getHeaders() });
   }
 
+
   post<T>(endpoint: string, data: any): Observable<T> {
-    return this.http.post<T>(`${this.baseUrl}${endpoint}`, data, { headers: this.getHeaders() });
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+    return this.http.post<T>(`${this.baseUrl}${cleanEndpoint}`, data, { headers: this.getHeaders() });
   }
+
 }

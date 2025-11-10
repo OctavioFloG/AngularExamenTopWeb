@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   loading = false;
 
-  constructor(private authService: Auth, private router: Router) {}
+  constructor(private authService: Auth, private router: Router) { }
 
   ngOnInit(): void {
     const token = this.authService.getToken() || SafeStorage.getItem('authToken');
@@ -44,7 +44,8 @@ export class LoginComponent implements OnInit {
         if (token) {
           console.log('[Login] Inicio de sesión exitoso. Token:', token);
           this.authService.setToken(token);
-          this.router.navigateByUrl('/dashboard');
+          setTimeout(() => this.router.navigateByUrl('/dashboard'), 0);
+
         } else {
           console.warn('[Login] No se recibió token válido en la respuesta:', response);
           this.errorMessage = 'Inicio de sesión fallido. Verifica tus credenciales.';
