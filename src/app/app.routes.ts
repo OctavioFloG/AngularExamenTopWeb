@@ -6,6 +6,7 @@ import { AuthGuard } from './services/auth-guard/auth.guard';
 import { KardexComponent } from './kardex/kardex';
 import { HorariosComponent } from './horarios/horarios';
 import { CalificacionesComponent } from './calificaciones/calificaciones';
+import { ComunidadComponent } from './comunidad/comunidad'; // <-- NUEVO
 import { LoginRedirectGuard } from './services/auth-guard/login-redirect.guard';
 
 export const routes: Routes = [
@@ -21,6 +22,7 @@ export const routes: Routes = [
       { path: 'kardex', component: KardexComponent },
       { path: 'horarios', component: HorariosComponent },
       { path: 'calificaciones', component: CalificacionesComponent },
+      { path: 'comunidad', component: ComunidadComponent }, // <-- NUEVA RUTA
       { path: '**', redirectTo: 'dashboard' },
     ],
   },
