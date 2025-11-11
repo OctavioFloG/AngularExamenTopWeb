@@ -1,28 +1,49 @@
 <app-nav></app-nav>
 
-<!-- Contenido -->
-<div class="container mt-4">
+<div class="kardex-layout">
   @if (loading) {
-    <p class="text-center text-secondary">Cargando Kardex...</p>
-  } @else if (errorMsg) {
-    <div class="alert alert-danger text-center">{{ errorMsg }}</div>
-  } @else {
-    <div class="text-center mb-4">
-      <h2 class="text-primary fw-bold">Kardex del Estudiante</h2>
-      <p class="fw-semibold text-success">
-        Avance académico: {{ avance | number: '1.2-2' }}%
-      </p>
+    <p class="kardex-loading">Cargando Kardex...</p>
+  }
+  @else if (errorMsg) {
+    <div class="kardex-error">
+      {{ errorMsg }}
     </div>
+  }
+  @else {
 
-    @for (semestre of (kardexPorSemestre | keyvalue); track semestre.key) {
-      <div class="card shadow-sm mb-4">
-        <div class="card-header bg-primary text-white">
-          <h5 class="mb-0">Semestre {{ semestre.key }}</h5>
+    <!-- Encabezado general -->
+    <section class="kardex-header">
+      <h2>Kardex del Estudiante</h2>
+
+      <div class="kardex-progress-wrapper">
+        <div class="kardex-progress-label">
+          Avance académico:
+          <span>{{ avance | number: '1.2-2' }}%</span>
         </div>
+        <div class="kardex-progress-bar">
+          <div
+            class="kardex-progress-fill"
+            [style.width.%]="avance"
+          ></div>
+        </div>
+      </div>
+    </section>
 
-        <div class="card-body p-0">
-          <table class="table table-striped mb-0">
-            <thead class="table-light">
+    <!-- Tarjetas por semestre (ordenadas) -->
+    @for (semestre of (kardexPorSemestre | keyvalue: ordenarSemestres); track semestre.key) {
+      <section class="kardex-semestre-card">
+        <header class="kardex-semestre-header">
+          <div class="kardex-semestre-title">
+            Semestre {{ semestre.key }}
+          </div>
+          <div class="kardex-semestre-pill">
+            {{ semestre.value.length }} materia(s)
+          </div>
+        </header>
+
+        <div class="kardex-table-wrapper">
+          <table class="kardex-table">
+            <thead>
               <tr>
                 <th>Materia</th>
                 <th>Clave</th>
@@ -33,25 +54,41 @@
               </tr>
             </thead>
             <tbody>
-              @for (materia of semestre.value; track materia.clave_materia) {
-                <tr>
-                  <td>{{ materia.nombre_materia }}</td>
+              @for (materia of semestre.value; track materia.clave_materia + materia.periodo) {
+                <tr [ngClass]="getFilaClass(materia.calificacion)">
+                  <td class="col-materia">
+                    {{ materia.nombre_materia }}
+                  </td>
                   <td>{{ materia.clave_materia }}</td>
                   <td>{{ materia.periodo }}</td>
                   <td>{{ materia.creditos }}</td>
-                  <td>{{ materia.calificacion }}</td>
-                  <td>{{ materia.descripcion }}</td>
+                  <td>
+                    <span
+                      class="badge-calificacion"
+                      [ngClass]="getCalificacionClass(materia.calificacion)"
+                    >
+                      {{ materia.calificacion || '-' }}
+                    </span>
+                  </td>
+                  <td class="col-descripcion">
+                    {{ materia.descripcion }}
+                  </td>
                 </tr>
               }
             </tbody>
           </table>
         </div>
-      </div>
+      </section>
     }
 
-    <div class="alert alert-info text-center fw-semibold">
-      Total de materias: {{ kardex.length }} |
-      Avance académico: {{ avance | number: '1.2-2' }}%
+    <!-- Resumen final -->
+    <div class="kardex-resumen">
+      <span>Total de materias: <strong>{{ kardex.length }}</strong></span>
+      <span>|</span>
+      <span>
+        Avance académico:
+        <strong>{{ avance | number: '1.2-2' }}%</strong>
+      </span>
     </div>
   }
 </div>
