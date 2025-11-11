@@ -1,11 +1,3 @@
-/*
-  Estilos del dashboard institucional:
-  - Foto izquierda + info básica derecha.
-  - Tarjetas con iconos.
-  - Barras de progreso.
-*/
-
-@import '../app.css';
 
 .dashboard-layout {
   min-height: 100vh;
