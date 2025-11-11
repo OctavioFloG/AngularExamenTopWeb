@@ -1,8 +1,116 @@
-.navbar .nav-link.active {
-  font-weight: bold;
-  text-decoration: underline;
+/*
+  Barra de navegación institucional superior.
+*/
+
+.app-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 2.2rem;
+  background: linear-gradient(90deg, #002b5c, #004b8d);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
 }
 
-.navbar-brand {
-  letter-spacing: 0.5px;
+.app-navbar-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.brand-subtitle {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+/* Links de navegación */
+
+.app-navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 1.8rem;
+  margin: 0;
+  padding: 0;
+}
+
+.app-navbar-links li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #e5e9f5;
+  text-decoration: none;
+  font-size: 1rem;         /* más grande */
+  font-weight: 500;
+  padding-bottom: 0.18rem;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-icon {
+  font-size: 1.1rem;       /* icono un poquito más grande */
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Hover / activo */
+
+.app-navbar-links li a:hover {
+  color: #ffffff;
+  border-bottom-color: rgba(243, 146, 0, 0.6);
+}
+
+.app-navbar-links li.active a,
+.app-navbar-links li.router-link-active a {
+  color: #f39200;
+  border-bottom-color: #f39200;
+}
+
+/* Botón cerrar sesión */
+
+.app-navbar-right .btn-logout {
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #f97316;
+  background-color: transparent;
+  color: #ffe4c4;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.app-navbar-right .btn-logout:hover {
+  background-color: #f39200;
+  color: #111827;
+}
+
+/* Responsivo básico */
+
+@media (max-width: 900px) {
+  .app-navbar {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    padding: 0.7rem 1.2rem;
+  }
+
+  .app-navbar-links {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+  }
+
+  .app-navbar-right {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
