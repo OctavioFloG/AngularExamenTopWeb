@@ -1,0 +1,239 @@
+.grades-layout {
+  min-height: 100vh;
+  padding: 1.8rem 2.4rem;
+  background-color: var(--color-fondo);
+}
+
+/* Estados */
+
+.grades-loading,
+.grades-empty {
+  margin-top: 2.5rem;
+  text-align: center;
+  font-size: 0.98rem;
+  color: #6b7280;
+}
+
+.grades-error {
+  margin: 2.2rem auto;
+  max-width: 720px;
+  padding: 0.9rem 1.1rem;
+  border-radius: 14px;
+  background-color: #fee2e2;
+  color: #991b1b;
+  text-align: center;
+  box-shadow: var(--sombra-suave);
+}
+
+/* Encabezado general */
+
+.grades-header {
+  max-width: 1250px;
+  margin: 1.2rem auto 1.8rem;
+}
+
+.grades-header h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-primario);
+}
+
+.grades-header p {
+  margin: 0.2rem 0 0;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+/* Tarjeta de cada periodo */
+
+.grades-period-card {
+  max-width: 1250px;
+  margin: 0 auto 1.8rem;
+  border-radius: 22px;
+  background-color: var(--color-card);
+  border: 1px solid var(--color-borde-suave);
+  box-shadow: var(--sombra-suave);
+  padding: 1.2rem 1.5rem 1.5rem;
+}
+
+.grades-period-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.period-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.period-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #9ca3af;
+}
+
+.period-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primario);
+}
+
+.period-code {
+  font-size: 0.82rem;
+  color: #6b7280;
+}
+
+.period-icon {
+  font-size: 1.8rem;
+  color: #fbbf24;
+}
+
+/* Grid de materias */
+
+.materias-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-top: 1.2rem;
+}
+
+/* Tarjeta por materia (más grande, textos más grandes) */
+
+.materia-card {
+  padding: 1.2rem 1.4rem;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    rgba(243, 146, 0, 0.05)
+  );
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  min-height: 170px;
+}
+
+.materia-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.materia-title {
+  margin: 0;
+  font-size: 1.15rem;          /* más grande */
+  font-weight: 600;
+  color: var(--color-primario);
+}
+
+.materia-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  font-size: 0.88rem;          /* un poco más grande */
+  color: #6b7280;
+}
+
+/* Bloque de calificaciones */
+
+.materia-calificaciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 0.3rem;
+}
+
+/* Recuadro de cada parcial (más grande + centrado) */
+
+.parcial-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;     /* centra vertical */
+  align-items: center;         /* centra horizontal */
+  gap: 0.18rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 16px;
+  min-width: 125px;            /* más ancho */
+  min-height: 70px;            /* más alto */
+  border: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.parcial-label {
+  font-size: 0.8rem;           /* más grande */
+  color: #1f2937;
+}
+
+.parcial-score {
+  font-size: 1.1rem;           /* más grande */
+  font-weight: 700;
+}
+
+/* Estados de color */
+
+.parcial-ok {
+  background-color: #dcfce7;
+  border-color: #22c55e;
+  color: #166534;
+}
+
+.parcial-ok .parcial-label,
+.parcial-ok .parcial-score {
+  color: inherit;
+}
+
+.parcial-bad {
+  background-color: #fee2e2;
+  border-color: #ef4444;
+  color: #991b1b;
+}
+
+.parcial-bad .parcial-label,
+.parcial-bad .parcial-score {
+  color: inherit;
+}
+
+.parcial-pendiente {
+  background-color: #e5e7eb;
+  border-color: #9ca3af;
+  color: #4b5563;
+}
+
+.parcial-pendiente .parcial-label,
+.parcial-pendiente .parcial-score {
+  color: inherit;
+}
+
+/* Responsivo */
+
+@media (max-width: 1024px) {
+  .grades-layout {
+    padding: 1rem;
+  }
+
+  .grades-period-card {
+    padding: 1rem 1.1rem 1.2rem;
+  }
+
+  .materias-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .grades-header h2 {
+    font-size: 1.6rem;
+  }
+}
