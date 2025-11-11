@@ -1,44 +1,172 @@
 <app-nav></app-nav>
 
-@switch (true) {
-  @case (loading) {
-    <p class="text-center mt-4">Cargando datos...</p>
-  }
+<div class="dashboard-layout">
+  @switch (true) {
 
-  @case (!!errorMsg) {
-    <div class="alert alert-danger text-center mt-4">{{ errorMsg }}</div>
-  }
+    @case (loading) {
+      <p class="dashboard-loading">Cargando datos...</p>
+    }
 
-  @case (!!estudiante) {
-    <div class="card shadow p-4 mt-4">
-      <h2 class="text-center mb-3">Bienvenido, {{ estudiante.persona }}</h2>
-
-      <div class="row">
-        <div class="col-md-6">
-          <ul class="list-group">
-            <li class="list-group-item"><strong>Número de control:</strong> {{ estudiante.numero_control }}</li>
-            <li class="list-group-item"><strong>Email:</strong> {{ estudiante.email }}</li>
-            <li class="list-group-item"><strong>Semestre:</strong> {{ estudiante.semestre }}</li>
-            <li class="list-group-item"><strong>Materias cursadas:</strong> {{ estudiante.materias_cursadas }}</li>
-            <li class="list-group-item"><strong>Materias aprobadas:</strong> {{ estudiante.materias_aprobadas }}</li>
-          </ul>
-        </div>
-
-        <div class="col-md-6">
-          <ul class="list-group">
-            <li class="list-group-item"><strong>Créditos acumulados:</strong> {{ estudiante.creditos_acumulados }}</li>
-            <li class="list-group-item"><strong>Promedio ponderado:</strong> {{ estudiante.promedio_ponderado | number:'1.2-2' }}</li>
-            <li class="list-group-item"><strong>Porcentaje de avance:</strong> {{ estudiante.porcentaje_avance }}%</li>
-            <li class="list-group-item"><strong>Materias reprobadas:</strong> {{ estudiante.materias_reprobadas }}</li>
-          </ul>
-        </div>
+    @case (!!errorMsg) {
+      <div class="dashboard-error">
+        {{ errorMsg }}
       </div>
+    }
 
-      @if (estudiante.foto) {
-        <div class="text-center mt-4">
-          <img [src]="'data:image/jpeg;base64,' + estudiante.foto" class="rounded-circle shadow" width="150" height="150">
+    @case (!!estudiante) {
+      <section class="dashboard-card">
+        <!-- Encabezado -->
+        <header class="dashboard-header">
+          <h2>Bienvenido, {{ estudiante.persona }}</h2>
+          <p>Este es tu resumen académico en el Sistema Integral de Información.</p>
+        </header>
+
+        <!-- Bloque de datos principales: foto izquierda + info básica derecha -->
+        <div class="dashboard-details">
+          @if (estudiante.foto) {
+            <div class="details-photo">
+              <img
+                [src]="'data:image/jpeg;base64,' + estudiante.foto"
+                alt="Foto del estudiante"
+              />
+            </div>
+          }
+
+          <div class="details-right">
+            <p>
+              <span class="label">Número de control:</span>
+              <span>{{ estudiante.numero_control }}</span>
+            </p>
+            <p>
+              <span class="label">Email institucional:</span>
+              <span>{{ estudiante.email }}</span>
+            </p>
+            <p>
+              <span class="label">Semestre actual:</span>
+              <span>{{ estudiante.semestre }}</span>
+            </p>
+          </div>
         </div>
-      }
-    </div>
+
+        <!-- Tarjetas resumen con iconos -->
+        <div class="dashboard-stats-row">
+          <div class="stat-card aprobado">
+            <div class="stat-header">
+              <span class="stat-icon">✅</span>
+              <span class="stat-label">Materias aprobadas</span>
+            </div>
+            <span class="stat-value">{{ estudiante.materias_aprobadas }}</span>
+          </div>
+
+          <div class="stat-card reprobado">
+            <div class="stat-header">
+              <span class="stat-icon">❌</span>
+              <span class="stat-label">Materias reprobadas</span>
+            </div>
+            <span class="stat-value">{{ estudiante.materias_reprobadas }}</span>
+          </div>
+
+          <div class="stat-card total">
+            <div class="stat-header">
+              <span class="stat-icon">📚</span>
+              <span class="stat-label">Total de materias</span>
+            </div>
+            <span class="stat-value">{{ estudiante.materias_cursadas }}</span>
+          </div>
+
+          <div class="stat-card creditos">
+            <div class="stat-header">
+              <span class="stat-icon">🎓</span>
+              <span class="stat-label">Créditos acumulados</span>
+            </div>
+            <span class="stat-value">{{ estudiante.creditos_acumulados }}</span>
+          </div>
+
+
+          <div class="stat-card rep-no-acred">
+            <div class="stat-header">
+              <span class="stat-icon">⚠️</span>
+              <span class="stat-label">Mat. rep. no acreditadas</span>
+            </div>
+            <span class="stat-value">{{ estudiante.num_mat_rep_no_acreditadas }}</span>
+          </div>
+
+          <div class="stat-card compl">
+            <div class="stat-header">
+              <span class="stat-icon">➕</span>
+              <span class="stat-label">Créditos complementarios</span>
+            </div>
+            <span class="stat-value">{{ estudiante.creditos_complementarios }}</span>
+          </div>
+
+          <div class="stat-card rep-primera">
+            <div class="stat-header">
+              <span class="stat-icon">♻️</span>
+              <span class="stat-label">Mat. rep. (1ra oportunidad)</span>
+            </div>
+            <span class="stat-value">{{ estudiante.num_materias_rep_primera }}</span>
+          </div>
+        </div>
+
+        <!-- Barras de progreso -->
+        <div class="dashboard-progress">
+          <!-- Promedio ponderado -->
+          <div class="progress-block">
+            <div class="progress-label">
+              <span>Promedio ponderado</span>
+              <span>{{ estudiante.promedio_ponderado | number:'1.2-2' }}</span>
+            </div>
+            <div class="progress-bar">
+              <div
+                class="progress-fill promedio"
+                [style.width.%]="(estudiante.promedio_ponderado || 0) > 100 ? 100 : estudiante.promedio_ponderado">
+              </div>
+            </div>
+          </div>
+
+          <!-- Promedio aritmético -->
+          <div class="progress-block">
+            <div class="progress-label">
+              <span>Promedio aritmético</span>
+              <span>{{ estudiante.promedio_aritmetico | number:'1.2-2' }}</span>
+            </div>
+            <div class="progress-bar">
+              <div
+                class="progress-fill promedio-alt"
+                [style.width.%]="(estudiante.promedio_aritmetico || 0) > 100 ? 100 : estudiante.promedio_aritmetico">
+              </div>
+            </div>
+          </div>
+
+          <!-- Avance de carrera -->
+          <div class="progress-block">
+            <div class="progress-label">
+              <span>Avance de carrera</span>
+              <span>{{ estudiante.porcentaje_avance }}%</span>
+            </div>
+            <div class="progress-bar">
+              <div
+                class="progress-fill avance"
+                [style.width.%]="estudiante.porcentaje_avance || 0">
+              </div>
+            </div>
+          </div>
+
+          <!-- Avance cursando -->
+          <div class="progress-block">
+            <div class="progress-label">
+              <span>Avance cursando</span>
+              <span>{{ estudiante.percentaje_avance_cursando }}%</span>
+            </div>
+            <div class="progress-bar">
+              <div
+                class="progress-fill cursando"
+                [style.width.%]="estudiante.percentaje_avance_cursando || 0">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    }
   }
-}
+</div>
