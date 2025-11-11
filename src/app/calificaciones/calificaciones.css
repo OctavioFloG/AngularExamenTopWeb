@@ -25,7 +25,7 @@
   box-shadow: var(--sombra-suave);
 }
 
-/* Encabezado general */
+/* Encabezado */
 
 .grades-header {
   max-width: 1250px;
@@ -43,6 +43,46 @@
   margin: 0.2rem 0 0;
   font-size: 0.95rem;
   color: #6b7280;
+}
+
+/* Buscador tipo barra */
+
+.grades-search {
+  margin-top: 1.1rem;
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  background-color: #ffffff;
+  border: 2px solid #d1d5db;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.08);
+  transition: all 0.2s ease-in-out;
+}
+
+.grades-search:focus-within {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 2px rgba(0, 43, 92, 0.12);
+}
+
+.search-icon {
+  font-size: 1.1rem;
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.grades-search input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 0.95rem;
+  color: #111827;
+  background: transparent;
+}
+
+.grades-search input::placeholder {
+  color: #9ca3af;
 }
 
 /* Tarjeta de cada periodo */
@@ -105,7 +145,7 @@
   margin-top: 1.2rem;
 }
 
-/* Tarjeta por materia (más grande, textos más grandes) */
+/* Tarjeta por materia */
 
 .materia-card {
   padding: 1.2rem 1.4rem;
@@ -131,7 +171,7 @@
 
 .materia-title {
   margin: 0;
-  font-size: 1.15rem;          /* más grande */
+  font-size: 1.15rem;
   font-weight: 600;
   color: var(--color-primario);
 }
@@ -140,7 +180,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1.1rem;
-  font-size: 0.88rem;          /* un poco más grande */
+  font-size: 0.88rem;
   color: #6b7280;
 }
 
@@ -153,18 +193,18 @@
   margin-top: 0.3rem;
 }
 
-/* Recuadro de cada parcial (más grande + centrado) */
+/* Recuadro de cada parcial */
 
 .parcial-item {
   display: flex;
   flex-direction: column;
-  justify-content: center;     /* centra vertical */
-  align-items: center;         /* centra horizontal */
+  justify-content: center;
+  align-items: center;
   gap: 0.18rem;
   padding: 0.55rem 0.9rem;
   border-radius: 16px;
-  min-width: 125px;            /* más ancho */
-  min-height: 70px;            /* más alto */
+  min-width: 125px;
+  min-height: 70px;
   border: 1px solid #e5e7eb;
   background-color: #f9fafb;
   box-sizing: border-box;
@@ -172,12 +212,12 @@
 }
 
 .parcial-label {
-  font-size: 0.8rem;           /* más grande */
+  font-size: 0.8rem;
   color: #1f2937;
 }
 
 .parcial-score {
-  font-size: 1.1rem;           /* más grande */
+  font-size: 1.1rem;
   font-weight: 700;
 }
 
