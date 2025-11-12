@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { SafeStorage } from '../../utils/storage';
 import { LoginResponse } from '../../../interfaces/login-response';
-
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +20,7 @@ export class Auth {
 
   login(email: string, password: string) {
     const body = { email, password };
-    return this.http.post<LoginResponse>('/api/login', body).pipe(
+    return this.http.post<LoginResponse>(`${environment.apiUrl}/api/login`, body).pipe(
       catchError((error) => {
         console.error('Login error:', error);
         return throwError(() => error);
