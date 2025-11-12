@@ -11,14 +11,23 @@ import { Auth } from '../../services/auth/auth';
   styleUrls: ['./navBar.css'],
 })
 export class NavBarComponent {
+  // Estado del menú móvil (hamburguesa).
+  isMenuOpen = false;
 
   constructor(
     private auth_service: Auth, // Servicio de autenticación.
     private router: Router      // Router para navegación.
   ) {}
 
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu(): void {
+    this.isMenuOpen = false;
+  }
+
   onLogout(): void {
-    // Cierra sesión y redirige al login.
     this.auth_service.logout();
     this.router.navigateByUrl('/login');
   }

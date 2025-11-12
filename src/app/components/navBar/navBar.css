@@ -1,7 +1,3 @@
-/*
-  Barra de navegación institucional superior.
-*/
-
 .app-navbar {
   position: sticky;
   top: 0;
@@ -9,35 +5,47 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   padding: 0.8rem 2.2rem;
   background: linear-gradient(90deg, #002b5c, #004b8d);
   color: #ffffff;
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
 }
 
+/* Marca */
 .app-navbar-left {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .brand-title {
-  font-size: 1.1rem;
+  font-size: 1.2rem;      /* un poco más grande */
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  line-height: 1.1;
 }
 
 .brand-subtitle {
-  font-size: 0.8rem;
-  opacity: 0.85;
+  font-size: 0.85rem;
+  opacity: 0.9;
 }
 
-/* Links de navegación */
+/* Iconos en los enlaces */
+.icon {
+  width: 1.15rem;
+  display: inline-flex;
+  justify-content: center;
+  margin-right: 0.5rem;
+}
 
+/* Enlaces */
 .app-navbar-links {
   list-style: none;
   display: flex;
-  gap: 1.8rem;
+  align-items: center;
+  gap: 1.4rem;
   margin: 0;
   padding: 0;
 }
@@ -45,23 +53,15 @@
 .app-navbar-links li a {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
   color: #e5e9f5;
   text-decoration: none;
-  font-size: 1rem;         /* más grande */
-  font-weight: 500;
-  padding-bottom: 0.18rem;
+  font-size: 1rem;        /* más grande */
+  font-weight: 600;
+  padding-bottom: 0.15rem;
   border-bottom: 2px solid transparent;
   transition: all 0.2s ease-in-out;
 }
-
-.nav-icon {
-  font-size: 1.1rem;       /* icono un poquito más grande */
-  display: inline-flex;
-  align-items: center;
-}
-
-/* Hover / activo */
 
 .app-navbar-links li a:hover {
   color: #ffffff;
@@ -75,16 +75,19 @@
 }
 
 /* Botón cerrar sesión */
-
 .app-navbar-right .btn-logout {
-  padding: 0.4rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.95rem;
   border-radius: 999px;
   border: 1px solid #f97316;
   background-color: transparent;
   color: #ffe4c4;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  white-space: nowrap;
 }
 
 .app-navbar-right .btn-logout:hover {
@@ -92,25 +95,55 @@
   color: #111827;
 }
 
-/* Responsivo básico */
+/* Botón hamburguesa (móvil) */
+.menu-toggle {
+  display: none;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
 
-@media (max-width: 900px) {
+/* --------- Responsive --------- */
+@media (max-width: 992px) {
+  .brand-subtitle {
+    display: none; /* reduce altura del header en móviles */
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .app-navbar {
     flex-wrap: wrap;
-    gap: 0.6rem;
-    padding: 0.7rem 1.2rem;
+    padding: 0.8rem 1rem;
   }
 
   .app-navbar-links {
+    display: none;              /* oculto por defecto */
     width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1.2rem;
+    flex-direction: column;     /* columna en móvil */
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 0.6rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .app-navbar-links.open {
+    display: flex;              /* se muestra cuando isMenuOpen=true */
   }
 
   .app-navbar-right {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+  }
+
+  .app-navbar-links li a {
+    font-size: 1.02rem;
   }
 }
