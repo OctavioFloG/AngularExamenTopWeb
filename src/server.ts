@@ -9,10 +9,8 @@ import { join } from 'node:path';
 import cors from 'cors';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
-// 📁 Carpeta del frontend compilado
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
-// 🚀 Inicializa Express y Angular SSR engine
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
@@ -36,10 +34,10 @@ app.use(
         proxyReq.setHeader('Origin', 'https://cetech.roque.tecnm.mx');
       },
       proxyRes: (proxyRes, req) => {
-        console.log(`➡️ [Proxy] ${req.method} ${req.url} → ${proxyRes.statusCode}`);
+        console.log(`[Proxy] ${req.method} ${req.url} → ${proxyRes.statusCode}`);
       },
       error: (err, req) => {
-        console.error(`❌ [Proxy Error] ${req.method} ${req.url}: ${err.message}`);
+        console.error(`[Proxy Error] ${req.method} ${req.url}: ${err.message}`);
       },
     },
   })
@@ -66,7 +64,7 @@ if (isMainModule(import.meta.url) || process.env['pm_id']) {
   const port = process.env['PORT'] || 4001;
   app.listen(port, (error) => {
     if (error) throw error;
-    console.log(`✅ SSR corriendo en http://localhost:${port}`);
+    console.log(`SSR corriendo en http://localhost:${port}`);
   });
 }
 
