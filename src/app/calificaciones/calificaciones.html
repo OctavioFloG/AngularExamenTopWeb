@@ -1,1 +1,92 @@
-<p>calificaciones works!</p>
+<app-nav></app-nav>
+
+<div class="grades-layout">
+  @if (loading) {
+    <p class="grades-loading">Cargando calificaciones...</p>
+  }
+  @else if (errorMsg) {
+    <div class="grades-error">
+      {{ errorMsg }}
+    </div>
+  }
+  @else {
+
+    <!-- Encabezado + buscador -->
+    <section class="grades-header">
+      <h2>Calificaciones del estudiante</h2>
+      <p>
+        Consulta tus calificaciones organizadas por periodo y parciales.
+        Usa el buscador para filtrar por materia, clave o periodo.
+      </p>
+
+      <!-- Buscador estilo barra con icono -->
+      <div class="grades-search">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          [(ngModel)]="filtro_texto"
+          placeholder="Buscar por materia, clave o periodo..."
+        />
+      </div>
+    </section>
+
+    <!-- Sin resultados con el filtro -->
+    @if (obtenerPeriodosFiltrados().length === 0) {
+      <p class="grades-empty">
+        No se encontraron calificaciones que coincidan con el filtro aplicado.
+      </p>
+    }
+    @else {
+
+      <!-- Tarjetas por periodo (ya filtrados) -->
+      @for (item of obtenerPeriodosFiltrados(); track item.periodo?.clave_periodo) {
+        <section class="grades-period-card">
+          <div class="grades-period-header">
+            <div class="period-info">
+              <div class="period-label">Periodo</div>
+              <h3 class="period-title">
+                {{ item.periodo.descripcion_periodo }}
+              </h3>
+              <div class="period-code">
+                Clave periodo: {{ item.periodo.clave_periodo }}
+              </div>
+            </div>
+            <div class="period-icon">📘</div>
+          </div>
+
+          <div class="materias-grid">
+            @for (materia of item.materias; track materia.materia.id_grupo) {
+              <article class="materia-card">
+                <div class="materia-header">
+                  <h4 class="materia-title">
+                    {{ materia.materia.nombre_materia }}
+                  </h4>
+                  <div class="materia-meta">
+                    <span>Clave: {{ materia.materia.clave_materia }}</span>
+                    <span>Grupo: {{ materia.materia.letra_grupo }}</span>
+                  </div>
+                </div>
+
+                <div class="materia-calificaciones">
+                  @for (parcial of buildParciales(materia); track parcial.etiqueta + '-' + (parcial.calificacion ?? 'null')) {
+                    <div
+                      class="parcial-item"
+                      [ngClass]="getParcialClass(parcial.calificacion)"
+                    >
+                      <div class="parcial-label">
+                        {{ parcial.etiqueta }}
+                      </div>
+                      <div class="parcial-score">
+                        {{ parcial.calificacion !== null ? parcial.calificacion : '-' }}
+                      </div>
+                    </div>
+                  }
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+      }
+    }
+  }
+</div>

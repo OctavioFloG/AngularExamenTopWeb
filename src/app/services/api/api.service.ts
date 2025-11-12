@@ -9,21 +9,27 @@ import { Observable } from 'rxjs';
 export class ApiService {
   private baseUrl = '/api/';
 
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient) { }
 
-  protected getHeaders(): HttpHeaders {
-    const token = localStorage.getItem('authToken') || '';
+  private getHeaders(): HttpHeaders {
+    const token = (typeof window !== 'undefined')
+      ? localStorage.getItem('authToken') || ''
+      : '';
     return new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
+      'Authorization': token ? `Bearer ${token}` : '',
       'Content-Type': 'application/json'
     });
   }
 
-  protected get<T>(endpoint: string): Observable<T> {
-    return this.http.get<T>(`${this.baseUrl}${endpoint}`, { headers: this.getHeaders() });
+  get<T>(endpoint: string): Observable<T> {
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+    return this.http.get<T>(`${this.baseUrl}${cleanEndpoint}`, { headers: this.getHeaders() });
   }
 
-  protected post<T>(endpoint: string, data: any): Observable<T> {
-    return this.http.post<T>(`${this.baseUrl}${endpoint}`, data, { headers: this.getHeaders() });
+
+  post<T>(endpoint: string, data: any): Observable<T> {
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
+    return this.http.post<T>(`${this.baseUrl}${cleanEndpoint}`, data, { headers: this.getHeaders() });
   }
+
 }

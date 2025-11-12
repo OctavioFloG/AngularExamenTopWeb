@@ -1,19 +1,69 @@
-<div class="container mt-5 col-md-4">
-  <div class="card p-4 shadow">
-    <h3 class="text-center mb-3">Iniciar Sesión</h3>
-    <form (ngSubmit)="onLogin()" #form="ngForm">
-      <div class="mb-3">
-        <label>Email</label>
-        <input type="email" [(ngModel)]="email" name="email" class="form-control" required>
+<div class="login-layout">
+  <!-- Sección izquierda: mensaje institucional centrado verticalmente -->
+  <section class="login-hero">
+    <div class="login-hero-title">
+      <h1>SII - Instituto Tecnológico de Celaya</h1>
+      <p>
+        Accede a tu información académica usando tu correo institucional y contraseña del SII
+        en un entorno con identidad visual institucional y diseño claro.
+      </p>
+      <div class="login-hero-badges">
+        <div class="badge">Portal Estudiantil.</div>
+        <div class="badge">Autenticación JWT.</div>
+        <div class="badge">TecNM / IT Celaya.</div>
       </div>
+    </div>
+  </section>
 
-      <div class="mb-3">
-        <label>Contraseña</label>
-        <input type="password" [(ngModel)]="password" name="password" class="form-control" required>
-      </div>
+  <!-- Sección derecha: tarjeta de login -->
+  <section class="login-panel">
+    <div class="login-card">
+      <h2 class="login-title">Iniciar sesión</h2>
+      <p class="login-subtitle">
+        Ingresa tu correo institucional y contraseña del SII para acceder al portal.
+      </p>
 
-      <button class="btn btn-primary w-100" type="submit">Entrar</button>
-      <div> @if(errorMessage){<div>{{errorMessage}}</div>}</div>
-    </form>
-  </div>
+      <form (ngSubmit)="onLogin()" #form="ngForm" autocomplete="off">
+        <!-- Correo -->
+        <div class="login-field">
+          <label for="email">Correo institucional</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="tucorreo@itcelaya.edu.mx"
+            required
+          />
+        </div>
+
+        <!-- Contraseña -->
+        <div class="login-field">
+          <label for="password">Contraseña</label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            [(ngModel)]="password"
+            required
+          />
+        </div>
+
+        <!-- Acciones -->
+        <div class="login-actions">
+          <button class="btn-primario login-button" type="submit" [disabled]="loading">
+            {{ loading ? 'Verificando...' : 'Acceder al portal' }}
+          </button>
+
+          <div *ngIf="errorMessage" class="login-error">
+            {{ errorMessage }}
+          </div>
+
+          <div *ngIf="loading && !errorMessage" class="login-loading">
+            Validando credenciales con el servidor...
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
 </div>

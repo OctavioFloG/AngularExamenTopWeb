@@ -1,0 +1,255 @@
+.kardex-layout {
+  min-height: 100vh;
+  padding: 2rem 2.6rem;
+  background-color: var(--color-fondo);
+}
+
+/* Estados */
+
+.kardex-loading {
+  margin-top: 2.5rem;
+  text-align: center;
+  font-size: 1.05rem;
+  color: #6b7280;
+}
+
+.kardex-error {
+  margin: 2.2rem auto;
+  max-width: 720px;
+  padding: 1rem 1.2rem;
+  border-radius: 14px;
+  background-color: #fee2e2;
+  color: #991b1b;
+  text-align: center;
+  box-shadow: var(--sombra-suave);
+}
+
+/* Encabezado general */
+
+.kardex-header {
+  max-width: 1250px;
+  margin: 0.6rem auto 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.kardex-header h2 {
+  margin: 0;
+  font-size: 2.4rem;           /* más grande */
+  font-weight: 800;
+  color: var(--color-primario);
+}
+
+/* Barra de progreso */
+
+.kardex-progress-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.kardex-progress-label {
+  font-size: 1.1rem;           /* sube */
+  color: #4b5563;
+  font-weight: 600;
+}
+
+.kardex-progress-label span {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.kardex-progress-bar {
+  position: relative;
+  width: 100%;
+  height: 11px;
+  border-radius: 999px;
+  background-color: #e5e7eb;
+  overflow: hidden;
+}
+
+.kardex-progress-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #22c55e, #f59e0b);
+  transition: width 0.3s ease-in-out;
+}
+
+/* Tarjeta por semestre */
+
+.kardex-semestre-card {
+  max-width: 1250px;
+  margin: 0 auto 1.2rem;
+  background-color: var(--color-card);
+  border-radius: 22px;
+  box-shadow: var(--sombra-suave);
+  border: 1px solid var(--color-borde-suave);
+  overflow: hidden;
+}
+
+/* Header de semestre */
+
+.kardex-semestre-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(90deg, #002b5c, #004b8d);
+  color: #ffffff;
+}
+
+.kardex-semestre-title {
+  font-size: 1.4rem;           /* más grande */
+  font-weight: 700;
+}
+
+.kardex-semestre-pill {
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  background-color: rgba(243, 146, 0, 0.16);
+  color: #fffbeb;
+  font-size: 0.95rem;          /* sube */
+  font-weight: 600;
+}
+
+/* Tabla */
+
+.kardex-table-wrapper {
+  padding: 0.5rem 1.15rem 1.15rem;
+  overflow-x: auto;
+}
+
+.kardex-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;             /* antes 0.95 */
+}
+
+.kardex-table thead {
+  background-color: #e5e9ff;
+}
+
+.kardex-table th,
+.kardex-table td {
+  padding: 0.8rem 0.7rem;      /* un poco más altos */
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.kardex-table th {
+  font-weight: 700;
+  color: #111827;
+  font-size: 0.98rem;          /* más legible */
+}
+
+.kardex-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Columnas importantes */
+
+.col-materia {
+  font-weight: 600;
+  color: #111827;
+}
+
+.col-descripcion {
+  font-size: 0.9rem;           /* sube */
+  color: #4b5563;
+}
+
+/* Fila reprobada */
+
+.row-reprobada {
+  background-color: #fef2f2;
+}
+
+/* Badge de calificación */
+
+.badge-calificacion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.9rem;           /* más grande */
+  font-weight: 700;
+}
+
+/* Colores por rango */
+
+.grade-excelente {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.grade-buena {
+  background-color: #e0f2fe;
+  color: #075985;
+}
+
+.grade-aprobatoria {
+  background-color: #fef9c3;
+  color: #92400e;
+}
+
+.grade-reprobada {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.grade-sin-dato {
+  background-color: #e5e7eb;
+  color: #6b7280;
+}
+
+/* Resumen final */
+
+.kardex-resumen {
+  max-width: 1250px;
+  margin: 0.9rem auto 2rem;
+  padding: 0.8rem 1.3rem;
+  border-radius: 14px;
+  background-color: #eff6ff;
+  color: #1f2937;
+  display: flex;
+  gap: 0.7rem;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.98rem;          /* más grande */
+  font-weight: 600;
+}
+
+/* Responsivo */
+
+@media (max-width: 768px) {
+  .kardex-layout {
+    padding: 1rem;
+  }
+
+  .kardex-header h2 {
+    font-size: 2rem;
+  }
+
+  .kardex-semestre-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .kardex-table th,
+  .kardex-table td {
+    padding: 0.65rem 0.5rem;
+    font-size: 0.92rem;
+  }
+
+  .badge-calificacion {
+    font-size: 0.86rem;
+    min-width: 48px;
+  }
+}

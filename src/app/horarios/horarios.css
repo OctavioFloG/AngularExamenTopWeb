@@ -1,0 +1,206 @@
+.schedule-layout {
+  min-height: 100vh;
+  padding: 1.8rem 2.4rem;
+  background-color: var(--color-fondo);
+}
+
+/* Estados */
+
+.schedule-loading,
+.schedule-empty {
+  margin-top: 2.5rem;
+  text-align: center;
+  font-size: 0.98rem;
+  color: #6b7280;
+}
+
+.schedule-error {
+  margin: 2.2rem auto;
+  max-width: 720px;
+  padding: 0.9rem 1.1rem;
+  border-radius: 14px;
+  background-color: #fee2e2;
+  color: #991b1b;
+  text-align: center;
+  box-shadow: var(--sombra-suave);
+}
+
+/* Encabezado */
+
+.schedule-header {
+  max-width: 1250px;
+  margin: 1.2rem auto 0.8rem;
+}
+
+.schedule-header h2 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800; /* negrita */
+  color: var(--color-primario);
+}
+
+.schedule-period {
+  margin-top: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.period-title {
+  font-weight: 700; /* negrita */
+  color: var(--color-primario);
+}
+
+.period-code {
+  font-size: 0.88rem;
+  color: #6b7280;
+}
+
+/* Tarjeta contenedora */
+
+.schedule-card {
+  max-width: 1250px;
+  margin: 0.8rem auto 1.8rem;
+  padding: 1.2rem 1.4rem 1.4rem;
+  background-color: var(--color-card);
+  border-radius: 22px;
+  border: 1px solid var(--color-borde-suave);
+  box-shadow: var(--sombra-suave);
+  overflow-x: auto;
+}
+
+/* Grid del horario: casillas más grandes */
+
+.schedule-grid {
+  display: grid;
+  grid-template-columns: 110px repeat(5, 1fr);
+  grid-auto-rows: 96px; /* antes 64px -> más grande */
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+/* Esquina vacía */
+
+.schedule-corner {
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+}
+
+/* Encabezado de días */
+
+.schedule-day-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;          /* negrita */
+  font-size: 1rem;
+  color: #e5e9f5;
+  background: linear-gradient(180deg, #002b5c, #004b8d);
+  border-radius: 14px;
+}
+
+/* Columna de horas */
+
+.schedule-hour-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;          /* negrita */
+  color: #334155;
+  background-color: #eef2ff;
+  border-radius: 14px;
+}
+
+/* Casillas base (vacías) */
+
+.schedule-cell {
+  border-radius: 16px;
+  background-color: #f3f4f6;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  padding: 0.5rem 0.65rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.15rem;
+  font-size: 0.86rem;  /* más grande */
+  color: #111827;
+  transition: all 0.18s ease-in-out;
+  font-weight: 700;   /* TODO negrita */
+}
+
+/* Casillas con clase: bordes + elevación */
+
+.schedule-cell.has-class {
+  border: 2px solid rgba(148, 163, 253, 0.7);
+}
+
+.schedule-cell.has-class:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(15, 23, 42, 0.14);
+}
+
+/* Texto dentro de casilla */
+
+.cell-materia {
+  font-weight: 800;  /* más negrita */
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.cell-meta {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.cell-salon {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* ----------- PALETA DE COLORES (12) ----------- */
+/* Se aplica junto con .has-class (ej. .has-class.color-0) */
+
+.has-class.color-0  { background: linear-gradient(135deg, #cfe9ff, #eaf4ff); border-color:#90caf9; }
+.has-class.color-1  { background: linear-gradient(135deg, #d9f7ff, #e9fcff); border-color:#80deea; }
+.has-class.color-2  { background: linear-gradient(135deg, #d7fbe8, #ebfff4); border-color:#34d399; }
+.has-class.color-3  { background: linear-gradient(135deg, #fff3d1, #fff8e4); border-color:#fbbf24; }
+.has-class.color-4  { background: linear-gradient(135deg, #ffe1e2, #fff0f1); border-color:#fda4af; }
+.has-class.color-5  { background: linear-gradient(135deg, #e8e7ff, #f0efff); border-color:#a5b4fc; }
+.has-class.color-6  { background: linear-gradient(135deg, #fde2ff, #f8e9ff); border-color:#d8b4fe; }
+.has-class.color-7  { background: linear-gradient(135deg, #eaf7d4, #f3fbdf); border-color:#a3e635; }
+.has-class.color-8  { background: linear-gradient(135deg, #fdebd3, #fff3e2); border-color:#f59e0b; }
+.has-class.color-9  { background: linear-gradient(135deg, #d1fae5, #e7fff3); border-color:#10b981; }
+.has-class.color-10 { background: linear-gradient(135deg, #e0e7ff, #eef2ff); border-color:#6366f1; }
+.has-class.color-11 { background: linear-gradient(135deg, #ffedd5, #fff3e6); border-color:#fb923c; }
+
+/* Responsivo */
+
+@media (max-width: 1024px) {
+  .schedule-layout {
+    padding: 1rem;
+  }
+
+  .schedule-card {
+    padding: 1rem 1.1rem 1.2rem;
+  }
+
+  .schedule-grid {
+    grid-template-columns: 90px repeat(5, minmax(92px, 1fr));
+    grid-auto-rows: 88px;
+  }
+
+  .cell-materia {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .schedule-header h2 {
+    font-size: 1.6rem;
+  }
+}

@@ -1,0 +1,47 @@
+<nav class="app-navbar">
+  <div class="app-navbar-left">
+    <div class="brand-title">TecNM Celaya</div>
+    <div class="brand-subtitle">Sistema Integral de Información</div>
+  </div>
+
+  <ul class="app-navbar-links">
+    <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a routerLink="/dashboard">
+        <span class="nav-icon">🏠</span>
+        <span>Inicio</span>
+      </a>
+    </li>
+
+    <li routerLinkActive="active">
+      <a routerLink="/calificaciones">
+        <span class="nav-icon">📊</span>
+        <span>Calificaciones</span>
+      </a>
+    </li>
+
+    <li routerLinkActive="active">
+      <a routerLink="/horarios">
+        <span class="nav-icon">🕒</span>
+        <span>Horarios</span>
+      </a>
+    </li>
+
+    <li routerLinkActive="active">
+      <a routerLink="/kardex">
+        <span class="nav-icon">📚</span>
+        <span>Kardex</span>
+      </a>
+    </li>
+
+      <li routerLinkActive="active">
+      <a routerLink="/comunidad">
+        <span class="nav-icon">🤝</span>
+        <span>Comunidad</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="app-navbar-right">
+    <button class="btn-logout" (click)="onLogout()">Cerrar sesión</button>
+  </div>
+</nav>

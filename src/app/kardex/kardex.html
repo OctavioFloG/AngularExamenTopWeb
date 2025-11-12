@@ -1,1 +1,94 @@
-<p>kardex works!</p>
+<app-nav></app-nav>
+
+<div class="kardex-layout">
+  @if (loading) {
+    <p class="kardex-loading">Cargando Kardex...</p>
+  }
+  @else if (errorMsg) {
+    <div class="kardex-error">
+      {{ errorMsg }}
+    </div>
+  }
+  @else {
+
+    <!-- Encabezado general -->
+    <section class="kardex-header">
+      <h2>Kardex del Estudiante</h2>
+
+      <div class="kardex-progress-wrapper">
+        <div class="kardex-progress-label">
+          Avance académico:
+          <span>{{ avance | number: '1.2-2' }}%</span>
+        </div>
+        <div class="kardex-progress-bar">
+          <div
+            class="kardex-progress-fill"
+            [style.width.%]="avance"
+          ></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tarjetas por semestre (ordenadas) -->
+    @for (semestre of (kardexPorSemestre | keyvalue: ordenarSemestres); track semestre.key) {
+      <section class="kardex-semestre-card">
+        <header class="kardex-semestre-header">
+          <div class="kardex-semestre-title">
+            Semestre {{ semestre.key }}
+          </div>
+          <div class="kardex-semestre-pill">
+            {{ semestre.value.length }} materia(s)
+          </div>
+        </header>
+
+        <div class="kardex-table-wrapper">
+          <table class="kardex-table">
+            <thead>
+              <tr>
+                <th>Materia</th>
+                <th>Clave</th>
+                <th>Periodo</th>
+                <th>Créditos</th>
+                <th>Calificación</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (materia of semestre.value; track materia.clave_materia + materia.periodo) {
+                <tr [ngClass]="getFilaClass(materia.calificacion)">
+                  <td class="col-materia">
+                    {{ materia.nombre_materia }}
+                  </td>
+                  <td>{{ materia.clave_materia }}</td>
+                  <td>{{ materia.periodo }}</td>
+                  <td>{{ materia.creditos }}</td>
+                  <td>
+                    <span
+                      class="badge-calificacion"
+                      [ngClass]="getCalificacionClass(materia.calificacion)"
+                    >
+                      {{ materia.calificacion || '-' }}
+                    </span>
+                  </td>
+                  <td class="col-descripcion">
+                    {{ materia.descripcion }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+    }
+
+    <!-- Resumen final -->
+    <div class="kardex-resumen">
+      <span>Total de materias: <strong>{{ kardex.length }}</strong></span>
+      <span>|</span>
+      <span>
+        Avance académico:
+        <strong>{{ avance | number: '1.2-2' }}%</strong>
+      </span>
+    </div>
+  }
+</div>

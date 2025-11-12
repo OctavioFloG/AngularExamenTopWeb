@@ -1,1 +1,79 @@
-<p>horarios works!</p>
+<app-nav></app-nav>
+
+<div class="schedule-layout">
+  @if (loading) {
+    <p class="schedule-loading">Cargando horarios...</p>
+  }
+  @else if (errorMsg) {
+    <div class="schedule-error">
+      {{ errorMsg }}
+    </div>
+  }
+  @else if (horarios.length > 0) {
+
+    <!-- Encabezado y periodo -->
+    <header class="schedule-header">
+      <h2>Horario del estudiante</h2>
+
+      @if (periodo_info) {
+        <div class="schedule-period">
+          <div class="period-title">
+            {{ periodo_info.descripcion_periodo }} 
+          </div>
+          <div class="period-code">
+            Clave periodo: <strong>{{ periodo_info.clave_periodo }}</strong>
+          </div>
+        </div>
+      }
+    </header>
+
+    <!-- Grid tipo plantilla -->
+    <section class="schedule-card">
+      <div class="schedule-grid">
+        <!-- Esquina vacía -->
+        <div class="schedule-corner"></div>
+
+        <!-- Encabezados de días -->
+        @for (dia of dias; track dia.clave) {
+          <div class="schedule-day-header">
+            {{ dia.etiqueta }}
+          </div>
+        }
+
+        <!-- Filas por hora -->
+        @for (hora of horas; track hora) {
+          <!-- Etiqueta de hora -->
+          <div class="schedule-hour-label">
+            {{ formatearHora(hora) }}
+          </div>
+
+          <!-- Celdas por día -->
+          @for (dia of dias; track dia.clave) {
+            <div
+              class="schedule-cell"
+              [ngClass]="obtenerCelda(hora, dia.clave) ? ['has-class', colorClassFor(hora, dia.clave)] : []"
+            >
+              @if (obtenerCelda(hora, dia.clave)) {
+                <div class="cell-materia">
+                  {{ obtenerCelda(hora, dia.clave)?.materia }}
+                </div>
+                <div class="cell-meta">
+                  {{ obtenerCelda(hora, dia.clave)?.clave }} • Grupo {{ obtenerCelda(hora, dia.clave)?.grupo }}
+                </div>
+                @if (obtenerCelda(hora, dia.clave)?.salon) {
+                  <div class="cell-salon">
+                    Aula {{ obtenerCelda(hora, dia.clave)?.salon }}
+                  </div>
+                }
+              }
+            </div>
+          }
+        }
+      </div>
+    </section>
+
+  }
+  @else {
+    <p class="schedule-empty">No hay horarios disponibles.</p>
+  }
+</div>

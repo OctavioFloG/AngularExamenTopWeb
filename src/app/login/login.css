@@ -1,0 +1,121 @@
+/* Mantiene dos columnas, dando mayor peso visual al bloque del login. */
+.login-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.3fr 1.7fr;
+}
+
+/* Lado izquierdo:
+   - Arriba a la izquierda, como el diseño original. */
+.login-hero {
+  padding: 4rem 0 0 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+/* Lado derecho:
+   - Tarjeta alineada un poco más hacia la izquierda de su columna. */
+.login-panel {
+  display: flex;
+  align-items: center;          /* Centrado vertical. */
+  justify-content: flex-start;  /* Pegamos hacia la izquierda. */
+  padding-left: 5rem;           /* Controla qué tanto se recorre a la izquierda. */
+}
+
+/* Tarjeta de login:
+   - Tamaño cómodo, sin margin-left adicional. */
+.login-card {
+  width: 100%;
+  max-width: 430px;
+  padding: 2.2rem 2rem;
+  border-radius: var(--radius-card);
+  box-shadow: var(--sombra-suave);
+  border: 1px solid var(--color-borde-suave);
+  background-color: var(--color-card);
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* Título “Iniciar sesión” grande y en color secundario. */
+.login-title {
+  font-weight: 400;
+  font-size: 2.1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 0.4rem 0;
+  color: #f39200 !important;
+}
+
+/* Subtítulo debajo del título. */
+.login-subtitle {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #6b7280;
+}
+
+/* Campos con buena separación. */
+.login-field {
+  margin-top: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+/* Labels más grandes y claros. */
+.login-field label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #374151;
+}
+
+/* Inputs más grandes para que se vean mejor. */
+.login-field input {
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition-base);
+}
+
+.login-field input:focus {
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 2px rgba(0, 43, 92, 0.12);
+}
+
+/* Bloque del botón:
+   - más separado del último input. */
+.login-actions {
+  margin-top: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Botón “Acceder al portal”: */
+.login-button {
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  background-color: #f39200 !important;
+  color: #111827 !important;
+  border: none !important;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-base);
+}
+
+.login-button:hover {
+  background-color: #ff9f1c !important;
+}
+
+/* Mensajes debajo del botón. */
+.login-error,
+.login-loading {
+  font-size: 0.8rem;
+}

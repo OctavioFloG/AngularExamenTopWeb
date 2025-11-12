@@ -1,0 +1,60 @@
+<app-nav></app-nav>
+
+<div class="comunidad-layout">
+  <!-- Encabezado principal -->
+  <section class="comunidad-header">
+    <h2>Próximos eventos de la comunidad estudiantil</h2>
+    <p>
+      Consulta actividades académicas, tecnológicas y culturales del TecNM Celaya.
+      La información presentada es simulada con fines académicos para este proyecto.
+    </p>
+  </section>
+
+  <!-- Tarjeta principal de eventos -->
+  <section class="comunidad-card eventos-card">
+    <div class="card-header">
+      <div>
+        <h3>Agenda destacada</h3>
+        <p>
+          Mantente al día con talleres, ferias, concursos y espacios de convivencia
+          pensados para la comunidad estudiantil.
+        </p>
+      </div>
+      <span class="card-icon">📅</span>
+    </div>
+
+    @if (lista_eventos.length === 0) {
+      <p class="card-empty">No hay eventos registrados por el momento.</p>
+    }
+    @else {
+      <div class="eventos-lista">
+        @for (evento of lista_eventos; track evento.titulo) {
+          <article class="evento-item">
+            <div class="evento-header">
+              <h4>{{ evento.titulo }}</h4>
+              <span
+                class="evento-tipo"
+                [attr.data-tipo]="evento.tipo"
+              >
+                {{ obtenerEtiquetaTipo(evento) }}
+              </span>
+            </div>
+
+            <div class="evento-meta">
+              <span class="evento-fecha">
+                📌 {{ evento.fecha }} &nbsp;•&nbsp; {{ evento.hora }}
+              </span>
+              <span class="evento-lugar">
+                📍 {{ evento.lugar }}
+              </span>
+            </div>
+
+            <p class="evento-descripcion">
+              {{ evento.descripcion }}
+            </p>
+          </article>
+        }
+      </div>
+    }
+  </section>
+</div>

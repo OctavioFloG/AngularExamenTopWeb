@@ -1,39 +1,46 @@
-import { Injectable } from '@angular/core';
-import { ApiService } from '../api/api.service';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Injectable, signal, computed } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
+import { SafeStorage } from '../../utils/storage';
 import { LoginResponse } from '../../../interfaces/login-response';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class Auth extends ApiService {
+export class Auth {
+  private _token = signal<string | null>(null);
 
-  login(email: string, password: string): Observable<LoginResponse> {
-    const body = { email, password };
-
-    return this.post<LoginResponse>('login', body)
-      .pipe(
-        catchError((error) => {
-          console.error('Error en login:', error);
-          return throwError(() => error);
-        })
-      );
+  constructor(private http: HttpClient) {
+    const stored = SafeStorage.getItem('authToken');
+    if (stored) {
+      this._token.set(stored);
+      console.log('[Auth] Token restaurado desde SafeStorage');
+    }
   }
 
-  setToken(token: string) {
-    localStorage.setItem('authToken', token); // Guarda el token en localStorage del navegador
+  login(email: string, password: string) {
+    const body = { email, password };
+    return this.http.post<LoginResponse>('/api/login', body).pipe(
+      catchError((error) => {
+        console.error('Login error:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  setToken(token: string): void {
+    this._token.set(token);
+    SafeStorage.setItem('authToken', token);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('authToken');  // Obtiene el token desde localStorage
+    return this._token() ?? SafeStorage.getItem('authToken');
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');  // Elimina el token al cerrar sesión
+    this._token.set(null);
+    SafeStorage.removeItem('authToken');
   }
 
-  isAuthenticated(): boolean {
-    return !!this.getToken();  // Si hay un token, el usuario está autenticado
-  }
-
+  readonly isAuthenticated = computed(() => !!this._token());
 }
