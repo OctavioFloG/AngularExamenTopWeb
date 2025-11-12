@@ -1,47 +1,51 @@
-<nav class="app-navbar">
+<nav class="app-navbar" [class.open]="isMenuOpen">
   <div class="app-navbar-left">
     <div class="brand-title">TecNM Celaya</div>
     <div class="brand-subtitle">Sistema Integral de Información</div>
   </div>
 
-  <ul class="app-navbar-links">
-    <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+  <!-- Botón hamburguesa (solo visible en pantallas pequeñas) -->
+  <button class="menu-toggle" type="button" (click)="toggleMenu()">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <ul class="app-navbar-links" [class.open]="isMenuOpen">
+    <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeMenu()">
       <a routerLink="/dashboard">
-        <span class="nav-icon">🏠</span>
+        <i class="fa-solid fa-house icon"></i>
         <span>Inicio</span>
       </a>
     </li>
-
-    <li routerLinkActive="active">
+    <li routerLinkActive="active" (click)="closeMenu()">
       <a routerLink="/calificaciones">
-        <span class="nav-icon">📊</span>
+        <i class="fa-solid fa-list-check icon"></i>
         <span>Calificaciones</span>
       </a>
     </li>
-
-    <li routerLinkActive="active">
+    <li routerLinkActive="active" (click)="closeMenu()">
       <a routerLink="/horarios">
-        <span class="nav-icon">🕒</span>
+        <i class="fa-regular fa-clock icon"></i>
         <span>Horarios</span>
       </a>
     </li>
-
-    <li routerLinkActive="active">
+    <li routerLinkActive="active" (click)="closeMenu()">
       <a routerLink="/kardex">
-        <span class="nav-icon">📚</span>
+        <i class="fa-solid fa-book icon"></i>
         <span>Kardex</span>
       </a>
     </li>
-
-      <li routerLinkActive="active">
+    <li routerLinkActive="active" (click)="closeMenu()">
       <a routerLink="/comunidad">
-        <span class="nav-icon">🤝</span>
+        <i class="fa-solid fa-users icon"></i>
         <span>Comunidad</span>
       </a>
     </li>
   </ul>
 
   <div class="app-navbar-right">
-    <button class="btn-logout" (click)="onLogout()">Cerrar sesión</button>
+    <button class="btn-logout" (click)="onLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      <span>Cerrar sesión</span>
+    </button>
   </div>
 </nav>

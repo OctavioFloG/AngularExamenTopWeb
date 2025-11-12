@@ -17,7 +17,10 @@
       <section class="dashboard-card">
         <!-- Encabezado -->
         <header class="dashboard-header">
-          <h2>BIENVENIDO, {{ estudiante.persona }}</h2>
+          <h2 class="dashboard-title">
+            <i class="fa-solid fa-user-graduate header-icon" aria-hidden="true"></i>
+            BIENVENIDO, {{ estudiante.persona }}
+          </h2>
           <p>Este es tu resumen académico en el Sistema Integral de Información.</p>
         </header>
 
@@ -48,11 +51,11 @@
           </div>
         </div>
 
-        <!-- Tarjetas resumen con iconos -->
+        <!-- Tarjetas resumen con iconos (Font Awesome) -->
         <div class="dashboard-stats-row">
           <div class="stat-card aprobado">
             <div class="stat-header">
-              <span class="stat-icon">✅</span>
+              <i class="stat-icon fa-solid fa-circle-check" aria-hidden="true"></i>
               <span class="stat-label">Materias aprobadas</span>
             </div>
             <span class="stat-value">{{ estudiante.materias_aprobadas }}</span>
@@ -60,7 +63,7 @@
 
           <div class="stat-card reprobado">
             <div class="stat-header">
-              <span class="stat-icon">❌</span>
+              <i class="stat-icon fa-solid fa-circle-xmark" aria-hidden="true"></i>
               <span class="stat-label">Materias reprobadas</span>
             </div>
             <span class="stat-value">{{ estudiante.materias_reprobadas }}</span>
@@ -68,7 +71,7 @@
 
           <div class="stat-card total">
             <div class="stat-header">
-              <span class="stat-icon">📚</span>
+              <i class="stat-icon fa-solid fa-book-open" aria-hidden="true"></i>
               <span class="stat-label">Total de materias</span>
             </div>
             <span class="stat-value">{{ estudiante.materias_cursadas }}</span>
@@ -76,16 +79,15 @@
 
           <div class="stat-card creditos">
             <div class="stat-header">
-              <span class="stat-icon">🎓</span>
+              <i class="stat-icon fa-solid fa-graduation-cap" aria-hidden="true"></i>
               <span class="stat-label">Créditos acumulados</span>
             </div>
             <span class="stat-value">{{ estudiante.creditos_acumulados }}</span>
           </div>
 
-
           <div class="stat-card rep-no-acred">
             <div class="stat-header">
-              <span class="stat-icon">⚠️</span>
+              <i class="stat-icon fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
               <span class="stat-label">Mat. rep. no acreditadas</span>
             </div>
             <span class="stat-value">{{ estudiante.num_mat_rep_no_acreditadas }}</span>
@@ -93,7 +95,7 @@
 
           <div class="stat-card compl">
             <div class="stat-header">
-              <span class="stat-icon">➕</span>
+              <i class="stat-icon fa-solid fa-circle-plus" aria-hidden="true"></i>
               <span class="stat-label">Créditos complementarios</span>
             </div>
             <span class="stat-value">{{ estudiante.creditos_complementarios }}</span>
@@ -101,7 +103,7 @@
 
           <div class="stat-card rep-primera">
             <div class="stat-header">
-              <span class="stat-icon">♻️</span>
+              <i class="stat-icon fa-solid fa-arrows-rotate" aria-hidden="true"></i>
               <span class="stat-label">Mat. rep. (1ra oportunidad)</span>
             </div>
             <span class="stat-value">{{ estudiante.num_materias_rep_primera }}</span>
